@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 function Form() {
@@ -8,12 +9,11 @@ function Form() {
   const [fields, setFields] = useState({});
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
-  //   const [formData, setFormData] = useState();
 
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:5000/${id}`)
-      .then((response) => setFields(response.data))
+      .then((response) => setFields((response.data)))
       .catch((error) => console.log(error));
   }, [id]);
 
@@ -64,6 +64,7 @@ function Form() {
     } else {
       console.log(formValues);
       navigate("/");
+      toast('success')
     }
   };
 

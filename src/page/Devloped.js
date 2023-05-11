@@ -18,6 +18,7 @@ function Test() {
     axios
       .get(`http://127.0.0.1:5000/${id}`)
       .then((response) => {
+        console.log(response)
         setFormData(response.data.data);
         setFormname(response.data.name);
         setIsEdit(true);
@@ -218,7 +219,7 @@ function Test() {
         );
       case "password":
         return (
-          <div class="form-group d-flex justify-content-around">
+          <div className="form-group d-flex justify-content-around">
             <div>
               <label htmlFor="label">Label Name : </label>
               <br />
@@ -269,7 +270,7 @@ function Test() {
               value={label}
               onChange={handleLabelChange}
             />
-            <div class="form-group">
+            <div className="form-group">
               <label
                 for="exampleFormControlTextarea1"
                 style={{ float: "left", margin: "8px" }}
@@ -277,7 +278,7 @@ function Test() {
                 {label ? label : "Example"} :{" "}
               </label>
               <textarea
-                class="form-control"
+                className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
                 value={inputValue}
@@ -288,7 +289,7 @@ function Test() {
         );
       case "date":
         return (
-          <div class="form-group">
+          <div className="form-group">
             <div>
               <label htmlFor="label">Label Name : </label>
               <br />
@@ -487,7 +488,7 @@ function Test() {
               </div>
 
               <div className="mt-3">
-                <div className="m-auto text-center border p-3">
+                <div className="m-auto text-center border p-2">
                   {renderInputField()}
                 </div>
 

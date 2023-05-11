@@ -29,17 +29,19 @@ function Home() {
   };
 
   const handleDelete = (id) => {
-    axios
-      .delete(`http://127.0.0.1:5000/delete_form/${id}`)
-      .then((response) => {
-        setPosts([...posts]);
-        window.location.reload();
-        alert("success");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      axios
+        .delete(`http://127.0.0.1:5000/delete_form/${id}`)
+        .then((response) => {
+          setPosts([...posts]);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
+  
 
   const handlePageClick = (event) => {
     const selectedPage = event.selected;
@@ -54,6 +56,7 @@ function Home() {
   useEffect(() => {
     getAllPosts();
   }, [offset, sortOrder]);
+
 
   return (
     <div className="container">
@@ -88,20 +91,20 @@ function Home() {
               {posts.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{item.name}</td>
+                  <td><Link to={`/view/${item.id}`}><span>{item.name}</span></Link></td>
                   <td>
                     <Link to={`/view/${item.id}`}>
-                      <i class="fa-solid fa-eye text-warning"></i>
+                      <i className="fa-solid fa-eye text-warning"></i>
                     </Link>
                   </td>
                   <td>
                     <Link to={`/devlop/${item.id}`}>
-                      <i class="fa-solid fa-pen-to-square text-warning"></i>
+                      <i className="fa-solid fa-pen-to-square text-warning"></i>
                     </Link>
                   </td>
                   <td>
                     <Link onClick={() => handleDelete(item.id)}>
-                      <i class="fa-solid fa-trash text-danger"></i>
+                      <i className="fa-solid fa-trash text-danger"></i>
                     </Link>
                   </td>
                 </tr>
