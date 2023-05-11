@@ -91,17 +91,17 @@ function Home() {
                   <td>{item.name}</td>
                   <td>
                     <Link to={`/view/${item.id}`}>
-                      <i class="fa-solid fa-eye text-warning"></i>
+                      <i className="fa-solid fa-eye text-warning"></i>
                     </Link>
                   </td>
                   <td>
                     <Link to={`/devlop/${item.id}`}>
-                      <i class="fa-solid fa-pen-to-square text-warning"></i>
+                      <i className="fa-solid fa-pen-to-square text-warning"></i>
                     </Link>
                   </td>
                   <td>
                     <Link onClick={() => handleDelete(item.id)}>
-                      <i class="fa-solid fa-trash text-danger"></i>
+                      <i className="fa-solid fa-trash text-danger"></i>
                     </Link>
                   </td>
                 </tr>

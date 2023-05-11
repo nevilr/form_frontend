@@ -158,7 +158,7 @@ console.log(options, "dd");
         );
       case 'password':
         return (
-          <div class="form-group d-flex justify-content-around">
+          <div className="form-group d-flex justify-content-around">
             <div>
               <label htmlFor="label">Label Name : </label><br />
               <input
@@ -206,9 +206,9 @@ console.log(options, "dd");
                 value={label}
                 onChange={handleLabelChange}
               />
-          <div class="form-group">
+          <div className="form-group">
             <label for="exampleFormControlTextarea1" style={{float:"left", margin:"8px"}}>{label ? label : "Example"} : </label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"
               value={inputValue}
               onChange={(event) => setInputValue(event.target.value)}>
             </textarea>
@@ -217,7 +217,7 @@ console.log(options, "dd");
         );
       case 'date':
         return (
-          <div class="form-group">
+          <div className="form-group">
             <div>
             <label htmlFor="label">Label Name : </label><br />
               <input

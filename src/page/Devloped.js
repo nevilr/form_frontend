@@ -218,7 +218,7 @@ function Test() {
         );
       case "password":
         return (
-          <div class="form-group d-flex justify-content-around">
+          <div className="form-group d-flex justify-content-around">
             <div>
               <label htmlFor="label">Label Name : </label>
               <br />
@@ -269,7 +269,7 @@ function Test() {
               value={label}
               onChange={handleLabelChange}
             />
-            <div class="form-group">
+            <div className="form-group">
               <label
                 for="exampleFormControlTextarea1"
                 style={{ float: "left", margin: "8px" }}
@@ -277,7 +277,7 @@ function Test() {
                 {label ? label : "Example"} :{" "}
               </label>
               <textarea
-                class="form-control"
+                className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
                 value={inputValue}
@@ -288,7 +288,7 @@ function Test() {
         );
       case "date":
         return (
-          <div class="form-group">
+          <div className="form-group">
             <div>
               <label htmlFor="label">Label Name : </label>
               <br />

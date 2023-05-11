@@ -24,7 +24,7 @@ input {
 }
 Form{
   border: 1px solid white;
-  padding: 15px;
+  padding: 3%;
   /* width: 20rem; */
   width: auto;
   color: black;
