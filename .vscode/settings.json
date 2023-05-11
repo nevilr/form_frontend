@@ -1,0 +1,8 @@
+{
+    "editor.formatOnSave": false,
+    "editor.formatOnType": false,
+    "editor.formatOnSaveMode": "file",
+    "workbench.editor.labelFormat": "default",
+    "html.format.indentHandlebars": false,
+    "html.format.indentInnerHtml": false
+}

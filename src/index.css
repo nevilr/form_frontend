@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@400;500&display=swap");
+
+#root {
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  /* font-family: "Roboto", sans-serif; */
+}
+
+.table-container {
+  background-color: #e0f0ff;
+  height: 100vh;
+}
+
+.container {
+  background-color: rgb(60, 59, 59);
+  color: white;
+  height: 100vh;
+  padding: 20px;
+}
+.row {
+  height: 100%;
+}
+
+.col {
+  width: auto;
+  margin: 3px;
+}
+
+/* //////  pagenation page */
+
+.previous .previousBttn {
+  text-decoration: none !important;
+  font-weight: 500;
+}
+
+.next .nextBttn {
+  text-decoration: none !important;
+  font-weight: 500;
+}
+
+.pagination li {
+  margin: 13px;
+  padding: 5px 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.pagination li:hover {
+  border: 4px solid rgb(220, 220, 220);
+}
+
+.pagination .active {
+  border-bottom: 3px solid rgb(130, 130, 130);
+  border-top: 3px solid rgb(130, 130, 130);
+  color: rgb(130, 130, 130);
+}

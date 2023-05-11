@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  height: 100vh;
+}
+
+label {
+  margin: 5px 10px 0px 5px;
+  color: white;
+}
+.error-message{
+  color: white;
+}
+
+input {
+  margin: 2px;
+  padding: 2px;
+  font-size: 15px;
+}
+Form{
+  border: 1px solid white;
+  padding: 15px;
+  /* width: 20rem; */
+  width: auto;
+  color: black;
+  background-color: white;
+}
+
+Form label {
+  color: black;
+}
