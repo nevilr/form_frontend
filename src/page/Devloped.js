@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Test() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [inputType, setInputType] = useState("");
   const [inputValue, setInputValue] = useState();
   const [options, setOptions] = useState([]);
@@ -13,10 +13,11 @@ function Test() {
   const [formname, setFormname] = useState();
   const [isDisabled, setIsDisabled] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [slugname, setSlugName] = useState();
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:5000/${id}`)
+      .get(`http://127.0.0.1:5000/${slug}`)
       .then((response) => {
         console.log(response)
         setFormData(response.data.data);
@@ -24,7 +25,7 @@ function Test() {
         setIsEdit(true);
       })
       .catch((error) => console.log(error));
-  }, [id]);
+  }, [slug]);
 
   const handleInputChange = (index, key, value) => {
     const updatedOptions = [...options];
@@ -155,9 +156,11 @@ function Test() {
   };
 
   const form_data = {
+    slug: slugname,
     name: formname,
     data: formdata,
   };
+  console.log(form_data);
   const handlefinalSubmit = () => {
     if (!isEdit) {
       axios
@@ -172,7 +175,7 @@ function Test() {
         });
     } else {
       axios
-        .put(`http://127.0.0.1:5000/edit_form/${id}`, form_data)
+        .put(`http://127.0.0.1:5000/edit_form/${slug}`, form_data)
         .then((response) => {
           setFormData([]);
           setFormname();
@@ -466,6 +469,17 @@ function Test() {
                   />
                 </div>
                 <div>
+                  <label htmlFor="">Unique Form Name:</label>
+                  <br />
+                  <input
+                    type="text"
+                    value={slugname}
+                    onChange={(event) => setSlugName(event.target.value)}
+                    // disabled={isDisabled}
+                  />
+                </div>
+                </div>
+                <div className="text-center">
                   <label htmlFor="input-type">Input Type:</label>
                   <br />
                   <select
@@ -485,7 +499,6 @@ function Test() {
                     <option value="file">file</option>
                   </select>
                 </div>
-              </div>
 
               <div className="mt-3">
                 <div className="m-auto text-center border p-2">
@@ -725,14 +738,12 @@ function Test() {
                   );
                 })}
               <Link to="/">
-                {" "}
                 <button
                   onClick={handlefinalSubmit}
                   className="btn btn-primary m-3"
                 >
-                  {" "}
                   {isEdit ? "Edit your data" : "Save data"}
-                </button>{" "}
+                </button>
               </Link>
             </div>
           </div>

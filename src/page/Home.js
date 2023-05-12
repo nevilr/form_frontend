@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 import { Link, useParams } from "react-router-dom";
 
 function Home() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [postsPerPage] = useState(5);
   const [offset, setOffset] = useState(0);
   const [posts, setPosts] = useState([]);
@@ -31,7 +31,7 @@ function Home() {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       axios
-        .delete(`http://127.0.0.1:5000/delete_form/${id}`)
+        .delete(`http://127.0.0.1:5000/delete_form/${slug}`)
         .then((response) => {
           setPosts([...posts]);
           window.location.reload();
@@ -82,7 +82,7 @@ function Home() {
                 <th onClick={handleSort} style={{ cursor: "pointer" }}>
                   Form Name {sortOrder === "asc" ? "▲" : "▼"}
                 </th>
-                <th>View</th>
+                <th>Form</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -91,19 +91,15 @@ function Home() {
               {posts.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td><Link to={`/view/${item.id}`}><span>{item.name}</span></Link></td>
+                  <td><Link to={`/view/${item.slug}`} style={{textDecoration: "none", color:"white"}}>{item.name}</Link></td>
+                  <td><Link to={`/view/${item.slug}`} style={{textDecoration: "none", color:"white"}}><i className="fa-solid fa-eye text-warning"></i></Link></td>
                   <td>
-                    <Link to={`/view/${item.id}`}>
-                      <i className="fa-solid fa-eye text-warning"></i>
-                    </Link>
-                  </td>
-                  <td>
-                    <Link to={`/devlop/${item.id}`}>
+                    <Link to={`/devlop/${item.slug}`}>
                       <i className="fa-solid fa-pen-to-square text-warning"></i>
                     </Link>
                   </td>
                   <td>
-                    <Link onClick={() => handleDelete(item.id)}>
+                    <Link onClick={() => handleDelete(item.slug)}>
                       <i className="fa-solid fa-trash text-danger"></i>
                     </Link>
                   </td>

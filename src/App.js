@@ -30,8 +30,8 @@ function App() {
 <Router>
   <Routes>
   <Route  path="/" element={<Home/>} />
-        <Route path="/devlop/:id?" element={<Test/>} />
-        <Route path="/view/:id" element={<View/>} />
+        <Route path="/devlop/:slug?" element={<Test/>} />
+        <Route path="/view/:slug" element={<View/>} />
   </Routes>
 </Router>
 
