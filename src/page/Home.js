@@ -28,7 +28,7 @@ function Home() {
     }
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (slug) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       axios
         .delete(`http://127.0.0.1:5000/delete_form/${slug}`)
@@ -41,7 +41,6 @@ function Home() {
         });
     }
   };
-  
 
   const handlePageClick = (event) => {
     const selectedPage = event.selected;
@@ -56,7 +55,6 @@ function Home() {
   useEffect(() => {
     getAllPosts();
   }, [offset, sortOrder]);
-
 
   return (
     <div className="container">
@@ -91,8 +89,22 @@ function Home() {
               {posts.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td><Link to={`/view/${item.slug}`} style={{textDecoration: "none", color:"white"}}>{item.name}</Link></td>
-                  <td><Link to={`/view/${item.slug}`} style={{textDecoration: "none", color:"white"}}><i className="fa-solid fa-eye text-warning"></i></Link></td>
+                  <td>
+                    <Link
+                      to={`/view/${item.slug}`}
+                      style={{ textDecoration: "none", color: "white" }}
+                    >
+                      {item.name}
+                    </Link>
+                  </td>
+                  <td>
+                    <Link
+                      to={`/view/${item.slug}`}
+                      style={{ textDecoration: "none", color: "white" }}
+                    >
+                      <i className="fa-solid fa-eye text-warning"></i>
+                    </Link>
+                  </td>
                   <td>
                     <Link to={`/devlop/${item.slug}`}>
                       <i className="fa-solid fa-pen-to-square text-warning"></i>
