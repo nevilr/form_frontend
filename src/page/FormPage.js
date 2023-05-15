@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 function Form() {
   const navigate = useNavigate();
-  const {id ,slug } = useParams();
+  const { id, slug } = useParams();
   const [fields, setFields] = useState({});
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
@@ -14,11 +14,10 @@ function Form() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/forms?slug=${slug}`)
-      .then((response) => setFields(response.data[0]))
+      .get(`http://127.0.0.1:5000/${slug}`)
+      .then((response) => setFields(response.data))
       .catch((error) => console.log(error));
   }, []);
-  
 
   console.log(fields, "dskdls");
   const { data } = fields;
@@ -66,11 +65,12 @@ function Form() {
       setFormErrors(errors);
     } else {
       if (window.confirm("are you sure want to submit form")) {
-        axios.post('http://localhost:3000/userforms', formValues)
+        axios
+          .post("http://localhost:3000/userforms", formValues)
           .then((response) => {
             console.log(response);
-          toast("SUCCESS...")
-        })
+            toast("SUCCESS...");
+          });
       }
       console.log(formValues);
       // navigate("/")
@@ -244,7 +244,7 @@ function Form() {
                 <button className="btn btn-warning">Back</button>
               </Link>
             </div>
-            <ToastContainer/>
+            <ToastContainer />
             {/* <div>
               {formValues && (
                 <img

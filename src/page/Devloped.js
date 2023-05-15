@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 function Test() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { slug } = useParams();
   const [inputType, setInputType] = useState("");
   const [inputValue, setInputValue] = useState();
@@ -18,12 +18,12 @@ function Test() {
   console.log(slug);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/forms?slug=${slug}`)
+      .get(`http://127.0.0.1:5000/${slug}`)
       .then((response) => {
         // console.log(response.data[0].slug, "Dssjdksj")
-        setFormData(response.data[0].data);
-        setFormname(response.data[0].name);
-        setSlugName(response.data[0].slug);
+        setFormData(response.data.data);
+        setFormname(response.data.name);
+        setSlugName(response.data.slug);
         setIsEdit(true);
       })
       .catch((error) => console.log(error));
@@ -162,16 +162,16 @@ function Test() {
     name: formname,
     data: formdata,
   };
-  
+
   const handlefinalSubmit = () => {
     if (!isEdit) {
       axios
-        .post("http://localhost:3000/forms", form_data)
+        .post("http://127.0.0.1:5000/create_form", form_data)
         .then((response) => {
           console.log(response.data["forms"]);
           setFormData([]);
           setFormname();
-          navigate("/")
+          navigate("/");
         })
         .catch((error) => {
           console.error(error);
@@ -179,16 +179,18 @@ function Test() {
         });
     } else {
       axios
-        .get(`http://localhost:3000/forms?slug=${slug}`)
+        .get(`http://127.0.0.1:5000/${slug}`)
         .then((response) => {
-          const edit_id = response.data[0].id;
+          console.log(response.data);
+          const edit_id = response.data.id;
           axios
-            .put(`http://localhost:3000/forms/${edit_id}`, form_data)
+            .put(`http://127.0.0.1:5000/edit_form/${edit_id}`, form_data)
             .then((response) => {
-              setFormData([]);
-              setFormname();
-              setSlugName()
-              navigate("/")
+              console.log(response.data);
+              setFormData(response.data.data);
+              setFormname(response.data.name);
+              setSlugName(response.data.slug);
+              navigate("/");
               console.log(response);
             })
             .catch((error) => {
@@ -200,7 +202,6 @@ function Test() {
         });
     }
   };
-  
 
   const renderInputField = () => {
     switch (inputType) {
@@ -490,7 +491,7 @@ function Test() {
                     type="text"
                     value={slugname}
                     onChange={(event) => setSlugName(event.target.value)}
-                  // disabled={isDisabled}
+                    // disabled={isDisabled}
                   />
                 </div>
               </div>
@@ -601,22 +602,22 @@ function Test() {
                       {(item.input === "text" ||
                         item.input === "email" ||
                         item.input === "tel") && (
-                          <div key={id}>
-                            <label>{item.props.label}</label>
-                            <br />
-                            <input
-                              type={item.input}
-                              name={item.props.name}
-                              value={item.props.name}
-                            />
-                            <Button
-                              onClick={() => removeData(id)}
-                              className="btn-warning fw-bold mx-2"
-                            >
-                              -
-                            </Button>
-                          </div>
-                        )}
+                        <div key={id}>
+                          <label>{item.props.label}</label>
+                          <br />
+                          <input
+                            type={item.input}
+                            name={item.props.name}
+                            value={item.props.name}
+                          />
+                          <Button
+                            onClick={() => removeData(id)}
+                            className="btn-warning fw-bold mx-2"
+                          >
+                            -
+                          </Button>
+                        </div>
+                      )}
                       {item.input === "password" && (
                         <div>
                           <label htmlFor="">{item.props.name}</label>
@@ -753,18 +754,22 @@ function Test() {
                   );
                 })}
               {formname ? (
-                  <button
+                <button
                   onClick={handlefinalSubmit}
                   className="btn btn-primary m-3"
-                  >
+                >
                   {isEdit ? "Edit your data" : "Save data"}
                 </button>
-                ) : (
-                  ""
-                  )}
+              ) : (
+                ""
+              )}
 
-              <Link to={'/'}> <button className="btn btn-warning"><i class="fa-solid fa-arrow-left"></i> HOME</button></Link>
-
+              <Link to={"/"}>
+                {" "}
+                <button className="btn btn-warning">
+                  <i class="fa-solid fa-arrow-left"></i> HOME
+                </button>
+              </Link>
             </div>
           </div>
         </div>
