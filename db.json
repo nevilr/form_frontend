@@ -1,0 +1,62 @@
+{
+  "forms": [
+    {
+      "slug": "login",
+      "name": "login",
+      "data": [
+        {
+          "input": "text",
+          "props": {
+            "name": "fsds",
+            "label": "fsds",
+            "value": ""
+          },
+          "validField": {
+            "min": "",
+            "max": ""
+          }
+        },
+        {
+          "input": "email",
+          "props": {
+            "name": "email",
+            "label": "email",
+            "value": ""
+          },
+          "validField": {
+            "min": "",
+            "max": "",
+            "require": true,
+            "alphanum": true
+          }
+        }
+      ],
+      "id": 0
+    },
+    {
+      "slug": "hjk",
+      "name": "dsklj",
+      "data": [
+        {
+          "input": "text",
+          "props": {
+            "name": "dssd",
+            "label": "dssd",
+            "value": ""
+          },
+          "validField": {
+            "min": "",
+            "max": ""
+          }
+        }
+      ],
+      "id": 1
+    }
+  ],
+
+  "userforms" : [
+    {
+
+    }
+  ]
+}

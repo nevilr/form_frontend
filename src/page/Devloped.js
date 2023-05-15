@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function Test() {
+  const navigate = useNavigate()
   const { slug } = useParams();
   const [inputType, setInputType] = useState("");
   const [inputValue, setInputValue] = useState();
@@ -15,13 +15,15 @@ function Test() {
   const [isEdit, setIsEdit] = useState(false);
   const [slugname, setSlugName] = useState();
 
+  console.log(slug);
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:5000/${slug}`)
+      .get(`http://localhost:3000/forms?slug=${slug}`)
       .then((response) => {
-        console.log(response)
-        setFormData(response.data.data);
-        setFormname(response.data.name);
+        // console.log(response.data[0].slug, "Dssjdksj")
+        setFormData(response.data[0].data);
+        setFormname(response.data[0].name);
+        setSlugName(response.data[0].slug);
         setIsEdit(true);
       })
       .catch((error) => console.log(error));
@@ -160,32 +162,45 @@ function Test() {
     name: formname,
     data: formdata,
   };
-  console.log(form_data);
+  
   const handlefinalSubmit = () => {
     if (!isEdit) {
       axios
-        .post("http://127.0.0.1:5000/create_form", form_data)
+        .post("http://localhost:3000/forms", form_data)
         .then((response) => {
           console.log(response.data["forms"]);
           setFormData([]);
           setFormname();
+          navigate("/")
         })
         .catch((error) => {
           console.error(error);
+          alert(error);
         });
     } else {
       axios
-        .put(`http://127.0.0.1:5000/edit_form/${slug}`, form_data)
+        .get(`http://localhost:3000/forms?slug=${slug}`)
         .then((response) => {
-          setFormData([]);
-          setFormname();
-          console.log(response);
+          const edit_id = response.data[0].id;
+          axios
+            .put(`http://localhost:3000/forms/${edit_id}`, form_data)
+            .then((response) => {
+              setFormData([]);
+              setFormname();
+              setSlugName()
+              navigate("/")
+              console.log(response);
+            })
+            .catch((error) => {
+              alert("error");
+            });
         })
         .catch((error) => {
           console.log(error);
         });
     }
   };
+  
 
   const renderInputField = () => {
     switch (inputType) {
@@ -475,30 +490,30 @@ function Test() {
                     type="text"
                     value={slugname}
                     onChange={(event) => setSlugName(event.target.value)}
-                    // disabled={isDisabled}
+                  // disabled={isDisabled}
                   />
                 </div>
-                </div>
-                <div className="text-center">
-                  <label htmlFor="input-type">Input Type:</label>
-                  <br />
-                  <select
-                    id="input-type"
-                    value={inputType}
-                    onChange={handleSelectChange}
-                    className="p-1"
-                  >
-                    <option value="">Select an input type</option>
-                    <option value="text">Text</option>
-                    <option value="radio">Radio</option>
-                    <option value="checkbox">checkbox</option>
-                    <option value="password">Password</option>
-                    <option value="date">date</option>
-                    <option value="textarea">textarea</option>
-                    <option value="select">Select</option>
-                    <option value="file">file</option>
-                  </select>
-                </div>
+              </div>
+              <div className="text-center">
+                <label htmlFor="input-type">Input Type:</label>
+                <br />
+                <select
+                  id="input-type"
+                  value={inputType}
+                  onChange={handleSelectChange}
+                  className="p-1"
+                >
+                  <option value="">Select an input type</option>
+                  <option value="text">Text</option>
+                  <option value="radio">Radio</option>
+                  <option value="checkbox">checkbox</option>
+                  <option value="password">Password</option>
+                  <option value="date">date</option>
+                  <option value="textarea">textarea</option>
+                  <option value="select">Select</option>
+                  <option value="file">file</option>
+                </select>
+              </div>
 
               <div className="mt-3">
                 <div className="m-auto text-center border p-2">
@@ -580,28 +595,28 @@ function Test() {
               <h3 className="text-center">{formname}</h3>
               {formdata &&
                 formdata.map((item, id) => {
-                  console.log(item, "dsd");
+                  // console.log(item, "dsd");
                   return (
                     <div>
                       {(item.input === "text" ||
                         item.input === "email" ||
                         item.input === "tel") && (
-                        <div key={id}>
-                          <label>{item.props.label}</label>
-                          <br />
-                          <input
-                            type={item.input}
-                            name={item.props.name}
-                            value={item.props.name}
-                          />
-                          <Button
-                            onClick={() => removeData(id)}
-                            className="btn-warning fw-bold mx-2"
-                          >
-                            -
-                          </Button>
-                        </div>
-                      )}
+                          <div key={id}>
+                            <label>{item.props.label}</label>
+                            <br />
+                            <input
+                              type={item.input}
+                              name={item.props.name}
+                              value={item.props.name}
+                            />
+                            <Button
+                              onClick={() => removeData(id)}
+                              className="btn-warning fw-bold mx-2"
+                            >
+                              -
+                            </Button>
+                          </div>
+                        )}
                       {item.input === "password" && (
                         <div>
                           <label htmlFor="">{item.props.name}</label>
@@ -737,14 +752,19 @@ function Test() {
                     </div>
                   );
                 })}
-              <Link to="/">
-                <button
+              {formname ? (
+                  <button
                   onClick={handlefinalSubmit}
                   className="btn btn-primary m-3"
-                >
+                  >
                   {isEdit ? "Edit your data" : "Save data"}
                 </button>
-              </Link>
+                ) : (
+                  ""
+                  )}
+
+              <Link to={'/'}> <button className="btn btn-warning"><i class="fa-solid fa-arrow-left"></i> HOME</button></Link>
+
             </div>
           </div>
         </div>

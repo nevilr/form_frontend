@@ -1,23 +1,26 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 function Form() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const {id ,slug } = useParams();
   const [fields, setFields] = useState({});
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
 
+  console.log(slug, "sdskjdk");
+
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:5000/${id}`)
-      .then((response) => setFields((response.data)))
+      .get(`http://localhost:3000/forms?slug=${slug}`)
+      .then((response) => setFields(response.data[0]))
       .catch((error) => console.log(error));
-  }, [id]);
+  }, []);
+  
 
-  console.log(fields);
+  console.log(fields, "dskdls");
   const { data } = fields;
   const formData = data;
   console.log(formData);
@@ -62,9 +65,15 @@ function Form() {
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
     } else {
+      if (window.confirm("are you sure want to submit form")) {
+        axios.post('http://localhost:3000/userforms', formValues)
+          .then((response) => {
+            console.log(response);
+          toast("SUCCESS...")
+        })
+      }
       console.log(formValues);
-      navigate("/");
-      toast('success')
+      // navigate("/")
     }
   };
 
@@ -235,6 +244,7 @@ function Form() {
                 <button className="btn btn-warning">Back</button>
               </Link>
             </div>
+            <ToastContainer/>
             {/* <div>
               {formValues && (
                 <img

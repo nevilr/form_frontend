@@ -4,8 +4,8 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { Link, useParams } from "react-router-dom";
 
-function Home() {
-  const { id, slug } = useParams();
+function UserForms() {
+    
   const [postsPerPage] = useState(5);
   const [offset, setOffset] = useState(0);
   const [posts, setPosts] = useState([]);
@@ -90,7 +90,7 @@ function Home() {
                 <th onClick={handleSort} style={{ cursor: "pointer" }}>
                   Form Name {sortOrder === "asc" ? "▲" : "▼"}
                 </th>
-                <th>User Forms</th>
+                <th>Form</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -101,7 +101,7 @@ function Home() {
                   <td>{index + 1}</td>
                   <td>
                     <Link
-                      to={`/formpage/${item.slug}`}
+                      to={`/view/${item.slug}`}
                       style={{ textDecoration: "none", color: "white" }}
                     >
                       {item.name}
@@ -109,10 +109,10 @@ function Home() {
                   </td>
                   <td>
                     <Link
-                      to={`/userforms/${item.slug}`}
+                      to={`/view/${item.slug}`}
                       style={{ textDecoration: "none", color: "white" }}
                     >
-                      <i class="fa-brands fa-wpforms text-info"></i>
+                      <i className="fa-solid fa-eye text-warning"></i>
                     </Link>
                   </td>
                   <td>
@@ -150,4 +150,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default UserForms;
